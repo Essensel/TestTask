@@ -36,7 +36,8 @@ public class RomanNumeralHandler extends AbstractNumeralHandler {
     public int getNumber(String arrayElement) {
         if(map.containsKey(arrayElement)){
             int number = map.get(arrayElement);
-            return number;}
-        return 0;}
+            return number;} else
+        throw new IllegalArgumentException("Калькулятор принимает на вход числа от 1 до 10 включительно, не более");
+    }
 }
 
