@@ -18,9 +18,10 @@ public class LineReader {
     private boolean isGoodOperandsOfExpression = true;
     private int number1;
     private int number2;
+    private boolean isArabicNumber;
+    private boolean isRomanNumber;
 
-
-    protected boolean getCorrectOperationSign() {
+    private boolean getCorrectOperationSign() {
         for (int i = 0; i < userText.length(); i++) {
             if (userText.substring(i, i + 1).equals("+") || userText.substring(i, i + 1).equals("-") || userText.substring(i, i + 1).equals("*") || userText.substring(i, i + 1).equals("/")) {
                 operation = userText.substring(i, i + 1);
@@ -33,7 +34,7 @@ public class LineReader {
         return isGoodOperationSigh;
     }
 
-    protected boolean getCorrectOperandsOfExpression() {
+    private boolean getCorrectOperandsOfExpression() {
         if (count == 1) {
             chars = userText.split("[+*/-]");
             chars[0] = chars[0].trim().toUpperCase();
@@ -43,11 +44,12 @@ public class LineReader {
         return isGoodOperandsOfExpression;
     }
 
-    protected boolean getCorrectNumbers(String[] chars) {
+
+    private boolean getCorrectNumbers(String[] chars) {
         romanNumeralHandler = RomanNumeralHandler.getInstance();
         arabicNumeralHandler = ArabicNumeralHandler.getInstance();
-        boolean isArabicNumber = true;
-        boolean isRomanNumber = true;
+        isArabicNumber = true;
+        isRomanNumber = true;
         for (int i = 0; i < chars.length; i++) {
             if (!romanNumeralHandler.isCorrectNumber(chars[i])) {
                 isRomanNumber = false;
@@ -65,7 +67,7 @@ public class LineReader {
             number2 = romanNumeralHandler.getNumber(chars[1]);
             return isRomanNumber;
         } else {
-            throw new IllegalArgumentException("Внимание! Калькулятор умеет выполнять операции только с двумя арабскими или двумя римскими цифрами! " +
+            throw new IllegalArgumentException("Внимание! Калькулятор умеет выполнять операции только с двумя арабскими или двумя римскими цифрами! от 1 до 10! " +
                     "Введите корректное выражение!");
         }
     }
@@ -76,7 +78,7 @@ public class LineReader {
             System.out.println("Введите новую строку: ");
             userText = reader.readLine();
             if (getCorrectOperationSign() && getCorrectOperandsOfExpression() && getCorrectNumbers(chars)) {
-                System.out.println(operation + " " + number1 + " " + number2);
+
             } else if (!userText.toUpperCase().equals("EXIT"))
                 throw new IllegalArgumentException("Внимание! Калькулятор умеет выполнять только операции сложения, вычитания, умножения и деления с двумя числами! " +
                         "Введите корректное выражение!");
@@ -86,6 +88,20 @@ public class LineReader {
         return userText.toUpperCase();
     }
 
+    public String getOperation() {
+        return operation;
+    }
 
+    public int getNumber1() {
+        return number1;
+    }
+
+    public int getNumber2() {
+        return number2;
+    }
+
+    public boolean getIsRomanNumber() {
+        return this.isRomanNumber;
+    }
 }
 
